@@ -13,19 +13,34 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
-
+    var arrayOfJson: NSArray?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
-
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        navigationItem.rightBarButtonItem = addButton
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        getJsonDataFromLink()
+    }
+    
+    func getJsonDataFromLink() {
+        var jsonUrlRequest = URLRequest(url: URL(string: "https://gist.githubusercontent.com/ashwini9241/6e0f26312ddc1e502e9d280806eed8bc/raw/7f15ad7c71a0905ec73d8e6107d3b24072093969/saltside-json-data")!)
+        jsonUrlRequest.httpMethod = "GET"
+        let urlSessionVar = URLSession(configuration: .default)
+        let urlSessionDownloadTask = urlSessionVar.dataTask(with: jsonUrlRequest) { (data, urlResponse, error) in
+            if let dataObject = data {
+                do {
+                let jsonParser = try JSONSerialization.jsonObject(with: dataObject, options: JSONSerialization.ReadingOptions.mutableContainers)
+                    self.arrayOfJson = jsonParser as? NSArray
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }catch {
+                    
+                }
+            }else {
+            }
+            
         }
+        urlSessionDownloadTask.resume()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -38,24 +53,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Dispose of any resources that can be recreated.
     }
 
-    @objc
-    func insertNewObject(_ sender: Any) {
-        let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = Event(context: context)
-             
-        // If appropriate, configure the new managed object.
-        newEvent.timestamp = Date()
-
-        // Save the context.
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-    }
+    
 
     // MARK: - Segues
 
@@ -74,18 +72,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     // MARK: - Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return fetchedResultsController.sections?.count ?? 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
+        return (arrayOfJson != nil) ? arrayOfJson!.count : 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if arrayOfJson != nil && (arrayOfJson?.count)! > 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "customCellJson", for: indexPath) as? CustomJsonTableViewCell
+            cell?.titleOfJson?.text = (arrayOfJson?.object(at: indexPath.row) as AnyObject).object(forKey: "title") as? String
+            cell?.descriptionOfJson?.text = (arrayOfJson?.object(at: indexPath.row) as AnyObject).object(forKey: "description") as? String
+            return cell!
+            
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let event = fetchedResultsController.object(at: indexPath)
-        configureCell(cell, withEvent: event)
         return cell
     }
 

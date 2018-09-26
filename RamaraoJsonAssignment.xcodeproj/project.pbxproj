@@ -14,6 +14,7 @@
 		66FD0D39215B4FAF003B4930 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FD0D37215B4FAF003B4930 /* Main.storyboard */; };
 		66FD0D3B215B4FB0003B4930 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66FD0D3A215B4FB0003B4930 /* Assets.xcassets */; };
 		66FD0D3E215B4FB0003B4930 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FD0D3C215B4FB0003B4930 /* LaunchScreen.storyboard */; };
+		66FD0D46215B55F4003B4930 /* CustomJsonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FD0D45215B55F4003B4930 /* CustomJsonTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		66FD0D3A215B4FB0003B4930 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66FD0D3D215B4FB0003B4930 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66FD0D3F215B4FB0003B4930 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66FD0D45215B55F4003B4930 /* CustomJsonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomJsonTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				66FD0D2E215B4FAF003B4930 /* AppDelegate.swift */,
 				66FD0D33215B4FAF003B4930 /* MasterViewController.swift */,
+				66FD0D45215B55F4003B4930 /* CustomJsonTableViewCell.swift */,
 				66FD0D35215B4FAF003B4930 /* DetailViewController.swift */,
 				66FD0D37215B4FAF003B4930 /* Main.storyboard */,
 				66FD0D3A215B4FB0003B4930 /* Assets.xcassets */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66FD0D32215B4FAF003B4930 /* RamaraoJsonAssignment.xcdatamodeld in Sources */,
+				66FD0D46215B55F4003B4930 /* CustomJsonTableViewCell.swift in Sources */,
 				66FD0D2F215B4FAF003B4930 /* AppDelegate.swift in Sources */,
 				66FD0D34215B4FAF003B4930 /* MasterViewController.swift in Sources */,
 				66FD0D36215B4FAF003B4930 /* DetailViewController.swift in Sources */,
